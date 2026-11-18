@@ -2,12 +2,14 @@ package main
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"flag"
 	"go/parser"
 	"go/token"
 	"io/fs"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"testing"
@@ -187,5 +189,108 @@ func TestNoProcessExecution(t *testing.T) {
 	})
 	if err != nil {
 		t.Fatal(err)
+	}
+}
+
+// TestHTMLFromHostileLogsIsInert feeds logged values that try to inject markup
+// and checks the report only contains the template's own tags and attributes.
+func TestHTMLFromHostileLogsIsInert(t *testing.T) {
+	hostile := "../../testdata/claude-code/hostile.jsonl"
+	for _, extra := range [][]string{nil, {"--redact"}} {
+		html := filepath.Join(t.TempDir(), "r.html")
+		args := append([]string{hostile, exB, "--quiet", "--html", html}, extra...)
+		if code, _, errOut := runCLI(t, args...); code != 0 {
+			t.Fatalf("exit %d: %s", code, errOut)
+		}
+		raw, _ := os.ReadFile(html)
+		page := string(raw)
+		allowed := map[string]bool{"html": true, "head": true, "meta": true, "title": true, "style": true, "body": true,
+			"main": true, "h1": true, "h2": true, "h3": true, "p": true, "b": true, "i": true, "div": true, "span": true,
+			"table": true, "tr": true, "th": true, "td": true, "code": true, "details": true, "summary": true,
+			"ul": true, "li": true, "footer": true}
+		for _, m := range regexp.MustCompile(`<([a-zA-Z][a-zA-Z0-9]*)`).FindAllStringSubmatch(page, -1) {
+			if !allowed[strings.ToLower(m[1])] {
+				t.Errorf("unexpected tag <%s> in report (args %v)", m[1], extra)
+			}
+		}
+		if regexp.MustCompile(`(?i)<[^>]*\son[a-z]+\s*=`).MatchString(page) {
+			t.Error("event-handler attribute in report")
+		}
+		if regexp.MustCompile(`(?i)<[^>]*\s(href|src|action|formaction)\s*=`).MatchString(page) {
+			t.Error("URL-bearing attribute in report")
+		}
+		if strings.ContainsRune(page, '\x1b') {
+			t.Error("raw ESC byte in report")
+		}
+	}
+}
+
+func TestTerminalFromHostileLogsHasNoEscapes(t *testing.T) {
+	_, out, _ := runCLI(t, "../../testdata/claude-code/hostile.jsonl", exB, "--limit", "0")
+	if strings.ContainsAny(out, "\x1b\x07") {
+		t.Fatal("logged control characters reached terminal output")
+	}
+}
+
+// TestSourceExportsAreNotModified checks that comparing (with redaction and
+// every output enabled) leaves the input files byte-for-byte unchanged.
+func TestSourceExportsAreNotModified(t *testing.T) {
+	dir := t.TempDir()
+	var inputs []string
+	for _, src := range []string{exA, exB} {
+		data, err := os.ReadFile(src)
+		if err != nil {
+			t.Fatal(err)
+		}
+		p := filepath.Join(dir, filepath.Base(src))
+		if err := os.WriteFile(p, data, 0o644); err != nil {
+			t.Fatal(err)
+		}
+		inputs = append(inputs, p)
+	}
+	before := map[string][32]byte{}
+	stat := map[string]os.FileInfo{}
+	for _, p := range inputs {
+		data, _ := os.ReadFile(p)
+		before[p] = sha256.Sum256(data)
+		stat[p], _ = os.Stat(p)
+	}
+	code, _, errOut := runCLI(t, inputs[0], inputs[1], "--redact", "--html", filepath.Join(dir, "r.html"), "--json", filepath.Join(dir, "r.json"))
+	if code != 0 {
+		t.Fatalf("exit %d: %s", code, errOut)
+	}
+	runCLI(t, "inspect", "--redact", inputs[0])
+	for _, p := range inputs {
+		data, _ := os.ReadFile(p)
+		if sha256.Sum256(data) != before[p] {
+			t.Errorf("%s was modified", p)
+		}
+		if st, _ := os.Stat(p); !st.ModTime().Equal(stat[p].ModTime()) {
+			t.Errorf("%s mtime changed", p)
+		}
+	}
+}
+
+func TestRedactedCWDsStayDistinguishable(t *testing.T) {
+	_, out, _ := runCLI(t, exA, exB, "--redact", "--no-color")
+	if !strings.Contains(out, "~ working directory        <cwd> (A)") {
+		t.Errorf("different cwds should not compare equal after redaction:\n%s", out)
+	}
+	_, out, _ = runCLI(t, exA, exA, "--redact", "--no-color")
+	if !strings.Contains(out, "= working directory        <cwd>") {
+		t.Errorf("identical cwds should compare equal after redaction")
+	}
+}
+
+func TestVersionString(t *testing.T) {
+	old := version
+	defer func() { version = old }()
+	version = "v9.9.9"
+	if versionString() != "v9.9.9" {
+		t.Error("ldflags version not used")
+	}
+	version = "dev"
+	if v := versionString(); v == "" {
+		t.Error("empty version")
 	}
 }

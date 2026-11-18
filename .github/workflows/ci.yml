@@ -85,6 +85,28 @@ jobs:
           set -e
           test "$code" -eq 1
 
+  release-build:
+    name: reproducible release archives
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.27.4"
+      - name: Build twice and compare
+        run: |
+          bash scripts/build-release.sh v0.0.0-ci dist1
+          go clean -cache
+          bash scripts/build-release.sh v0.0.0-ci dist2
+          cmp dist1/SHA256SUMS dist2/SHA256SUMS
+      - name: Built binary runs
+        run: |
+          tar -xzf dist1/agent-session-diff_0.0.0-ci_linux_amd64.tar.gz
+          ./agent-session-diff_0.0.0-ci_linux_amd64/agent-session-diff version | grep -q 'v0.0.0-ci'
+          ./agent-session-diff_0.0.0-ci_linux_amd64/agent-session-diff examples/claude-code-session.jsonl examples/codex-session.jsonl --quiet
+
   vulncheck:
     runs-on: ubuntu-latest
     steps:

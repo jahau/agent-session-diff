@@ -1,6 +1,6 @@
 # License review
 
-Reviewed: 2026-11-18, for the initial implementation.
+Reviewed: 2026-11-18, for the initial implementation and again for v0.1.0.
 
 ## Project license
 
@@ -17,15 +17,17 @@ module. CI fails if a dependency is added without updating this review (the
 `deps` step in `.github/workflows/ci.yml`).
 
 The Go standard library's BSD-3-Clause license allows redistribution of
-binaries. When distributing built binaries, include the Go license notice
-(`$(go env GOROOT)/LICENSE`) alongside this project's `LICENSE`.
+binaries if its notice is included. Every release archive built by
+`scripts/build-release.sh` contains this project's `LICENSE` and the Go
+toolchain's notice as `LICENSE-Go`.
 
 ## CI-only tools (not distributed)
 
 | Tool | License | Use |
 | --- | --- | --- |
 | `actions/checkout`, `actions/setup-go` | MIT | GitHub Actions steps. |
-| `golang.org/x/vuln/cmd/govulncheck` | BSD-3-Clause | Vulnerability scan in CI. Fetched at run time, not vendored or linked. |
+| `golang.org/x/vuln/cmd/govulncheck` v1.9.0 | BSD-3-Clause | Vulnerability scan in CI. Fetched at run time, not vendored or linked. |
+| GNU tar, gzip, zip (ubuntu-latest runner) | GPL / zip license | Package release archives. Not included in the archives. |
 
 ## Repository content
 

@@ -47,9 +47,9 @@
     },
     {
       "field": "working directory",
-      "a": "<cwd>",
-      "b": "<cwd>",
-      "differs": false
+      "a": "<cwd> (A)",
+      "b": "<cwd> (B)",
+      "differs": true
     },
     {
       "field": "records (lines)",
@@ -738,7 +738,7 @@
       "5f1c2a9e-0b7d-4c3e-9a61-2d8e4f7b1c03"
     ],
     "agent_version": "2.1.40",
-    "cwd": "<cwd>",
+    "cwd": "<cwd> (A)",
     "git_branch": "fix/port-validation",
     "models": [
       "claude-opus-5-5"
@@ -1019,7 +1019,7 @@
       "019a7f00-1111-7222-8333-944455556666"
     ],
     "agent_version": "0.98.0",
-    "cwd": "<cwd>",
+    "cwd": "<cwd> (B)",
     "git_branch": "fix/port-validation",
     "models": [
       "gpt-5.3-codex"
