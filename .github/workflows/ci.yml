@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: gofmt
+        run: |
+          unformatted="$(gofmt -l .)"
+          if [ -n "$unformatted" ]; then echo "Not gofmt-formatted:"; echo "$unformatted"; exit 1; fi
+      - name: go vet
+        run: go vet ./...
+      - name: go.mod is tidy
+        run: go mod tidy && git diff --exit-code go.mod
+      - name: deps (no third-party modules; see docs/license-review.md)
+        run: |
+          mods="$(go list -m all)"
+          if [ "$mods" != "github.com/jahau/agent-session-diff" ]; then
+            echo "Unexpected modules - update docs/license-review.md:"; echo "$mods"; exit 1
+          fi
+
+  test:
+    name: test (${{ matrix.os }}, go ${{ matrix.go }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        go: ["1.24.x", "stable"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}
+      - run: go test -count=1 ./...
+
+  race:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: go test -race -count=1 ./...
+
+  smoke:
+    name: determinism and examples
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: go build -o asd ./cmd/agent-session-diff
+      - name: Same input gives byte-identical output
+        run: |
+          for i in 1 2 3; do
+            ./asd examples/claude-code-session.jsonl examples/codex-session.jsonl \
+              --no-color --limit 0 --html "run$i.html" --json "run$i.json" > "run$i.txt"
+            sed -i '/^HTML report written to/d' "run$i.txt"
+          done
+          cmp run1.html run2.html && cmp run2.html run3.html
+          cmp run1.json run2.json && cmp run2.json run3.json
+          cmp run1.txt run2.txt && cmp run2.txt run3.txt
+      - name: Committed example reports are current
+        run: |
+          sh scripts/update-examples.sh
+          git diff --exit-code examples/
+      - name: Malformed input is rejected cleanly
+        run: |
+          set +e
+          ./asd testdata/malformed/binary.bin examples/codex-session.jsonl; code=$?
+          set -e
+          test "$code" -eq 1
+
+  vulncheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: go run golang.org/x/vuln/cmd/govulncheck@v1.1.4 ./...
