@@ -1,0 +1,36 @@
+name: Release
+
+# Runs only when a version tag is pushed. It creates a DRAFT release with the
+# archives attached; a maintainer reviews and publishes it by hand.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          # Pinned so anyone can reproduce the archives byte for byte.
+          go-version: "1.27.4"
+      - run: go vet ./...
+      - run: go test -count=1 ./...
+      - name: Build archives
+        run: bash scripts/build-release.sh "$GITHUB_REF_NAME" dist
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          notes="docs/release-notes/${GITHUB_REF_NAME}.md"
+          if [ ! -f "$notes" ]; then echo "missing $notes"; exit 1; fi
+          gh release create "$GITHUB_REF_NAME" dist/*.tar.gz dist/*.zip dist/SHA256SUMS \
+            --draft --verify-tag --title "agent-session-diff $GITHUB_REF_NAME" --notes-file "$notes"
