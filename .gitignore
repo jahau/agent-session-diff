@@ -1,0 +1,6 @@
+/agent-session-diff
+/agent-session-diff.exe
+/dist/
+*.test
+*.out
+/coverage.*

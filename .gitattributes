@@ -1,0 +1,3 @@
+# Keep sources, fixtures and golden files LF on every platform so output is byte-identical.
+* text=auto eol=lf
+*.png binary
