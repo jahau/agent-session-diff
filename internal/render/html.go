@@ -1,7 +1,9 @@
 package render
 
 import (
+	"bytes"
 	_ "embed"
+	"fmt"
 	"html/template"
 	"io"
 	"strings"
@@ -73,6 +75,28 @@ var htmlTmpl = template.Must(template.New("report").Funcs(template.FuncMap{
 
 // HTML writes the standalone HTML report. All logged values are escaped by
 // html/template; the page loads no external resources and runs no scripts.
+//
+// Control characters from logs (ESC, BEL, C1 controls...) are rewritten to a
+// visible \xNN form so the file is also safe to print in a terminal. The
+// template itself contains none, so only logged values are affected.
 func HTML(w io.Writer, r *compare.Report) error {
-	return htmlTmpl.Execute(w, r)
+	var buf bytes.Buffer
+	if err := htmlTmpl.Execute(&buf, r); err != nil {
+		return err
+	}
+	_, err := io.WriteString(w, stripControls(buf.String()))
+	return err
+}
+
+func stripControls(s string) string {
+	var b strings.Builder
+	b.Grow(len(s))
+	for _, r := range s {
+		if (r < 0x20 && r != '\n' && r != '\t' && r != '\r') || r == 0x7f || (r >= 0x80 && r < 0xa0) {
+			fmt.Fprintf(&b, `\x%02x`, r)
+			continue
+		}
+		b.WriteRune(r)
+	}
+	return b.String()
 }
