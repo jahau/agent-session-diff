@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="agent-session-diff (schema 1)">
+<title>Session diff: legacy.jsonl vs codex-session.jsonl</title>
+<style>
+:root {
+  --bg: #f7f7f5; --panel: #ffffff; --text: #1d1f23; --muted: #626872; --line: #e2e3e0;
+  --a: #1f6fb2; --b: #9a3d8f; --same: #2d7d46; --diff: #a86400; --bad: #b3261e;
+  --chip: #eef0ee; --code: #f1f2ef;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171a; --panel: #1d2024; --text: #e6e7e9; --muted: #9aa0a8; --line: #2e3238;
+    --a: #6cb2ec; --b: #d68ccc; --same: #6cc58a; --diff: #e3ad4f; --bad: #f08a80;
+    --chip: #2a2e33; --code: #23272c;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 1200px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 22px; margin: 0 0 4px; }
+h2 { font-size: 16px; margin: 32px 0 8px; }
+p.lede, .muted { color: var(--muted); }
+p.lede { margin: 0 0 16px; }
+code, .mono { font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace; font-size: 12.5px; }
+.sides { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.card h3 { margin: 0 0 4px; font-size: 14px; }
+.tag { display: inline-block; min-width: 20px; text-align: center; font-weight: 700; border-radius: 4px; padding: 0 5px; color: #fff; }
+.tag.a { background: var(--a); } .tag.b { background: var(--b); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 12px; }
+.stat b { display: block; font-size: 20px; }
+.scroll { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; vertical-align: top; padding: 6px 10px; border-bottom: 1px solid var(--line); }
+th { font-weight: 600; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .03em; background: var(--panel); }
+tr:last-child td { border-bottom: 0; }
+td.cmd { max-width: 560px; white-space: pre-wrap; word-break: break-word; }
+td.path { word-break: break-all; }
+.mark { font-weight: 700; width: 1%; white-space: nowrap; }
+.m-same { color: var(--same); } .m-diff { color: var(--diff); } .m-a { color: var(--a); } .m-b { color: var(--b); }
+.absent, .nr { color: var(--muted); }
+.bad { color: var(--bad); }
+.lvl { display: inline-block; border-radius: 10px; padding: 0 8px; background: var(--chip); font-size: 12px; white-space: nowrap; }
+.lvl-recorded { color: var(--same); } .lvl-partial { color: var(--diff); }
+.lvl-not-recorded, .lvl-unsupported { color: var(--bad); }
+.legend { font-size: 12px; color: var(--muted); margin: 4px 0 8px; }
+details { margin-top: 8px; } summary { cursor: pointer; color: var(--muted); }
+footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+<h1>Session diff</h1>
+<p class="lede">Comparison of two AI coding-agent session exports. Only actions recorded in the exports are shown; logged commands were not executed. Redaction: <b>off</b>.</p>
+
+<div class="sides">
+  <div class="card"><h3><span class="tag a">A</span> legacy.jsonl</h3>
+    <div class="muted">codex 0.58.0 · 3 file changes · 4 commands · 3 test runs</div></div>
+  <div class="card"><h3><span class="tag b">B</span> codex-session.jsonl</h3>
+    <div class="muted">codex 0.98.0 · 2 file changes · 5 commands · 2 test runs</div></div>
+</div>
+
+<div class="stats">
+  <div class="card stat"><b>0</b>files in both <span class="muted">(0 differ)</span></div>
+  <div class="card stat"><b>3 / 2</b>files only in A / only in B</div>
+  <div class="card stat"><b>0</b>commands in both</div>
+  <div class="card stat"><b>4 / 5</b>commands only in A / only in B</div>
+</div>
+
+<h2>Overview</h2>
+<div class="scroll"><table>
+<tr><th></th><th>Field</th><th>A</th><th>B</th></tr>
+<tr><td class="mark m-same">=</td><td>format</td><td class="">codex</td><td class="">codex</td></tr>
+<tr><td class="mark m-diff">~</td><td>agent version</td><td class="">0.58.0</td><td class="">0.98.0</td></tr>
+<tr><td class="mark m-diff">~</td><td>session id</td><td class="">019a7e24-40ec-7660-93f3-a5387a4887b0</td><td class="">019a7f00-1111-7222-8333-944455556666</td></tr>
+<tr><td class="mark m-diff">~</td><td>model</td><td class="">gpt-5-codex</td><td class="">gpt-5.3-codex</td></tr>
+<tr><td class="mark m-diff">~</td><td>git branch</td><td class="nr">not recorded</td><td class="">fix/port-validation</td></tr>
+<tr><td class="mark m-diff">~</td><td>working directory</td><td class="">/srv/app</td><td class="">C:\work\widget</td></tr>
+<tr><td class="mark m-diff">~</td><td>records (lines)</td><td class="">16 (16)</td><td class="">20 (20)</td></tr>
+<tr><td class="mark m-same">=</td><td>malformed records</td><td class="">0</td><td class="">0</td></tr>
+<tr><td class="mark m-diff">~</td><td>file changes</td><td class="">3</td><td class="">2</td></tr>
+<tr><td class="mark m-diff">~</td><td>files touched</td><td class="">3</td><td class="">2</td></tr>
+<tr><td class="mark m-diff">~</td><td>commands</td><td class="">4</td><td class="">5</td></tr>
+<tr><td class="mark m-diff">~</td><td>commands failed</td><td class="">2</td><td class="">0</td></tr>
+<tr><td class="mark m-diff">~</td><td>commands without result</td><td class="">1</td><td class="">0</td></tr>
+<tr><td class="mark m-diff">~</td><td>test runs</td><td class="">3</td><td class="">2</td></tr>
+<tr><td class="mark m-diff">~</td><td>last test run</td><td class="">failed (cargo test)</td><td class="">passed (go test)</td></tr>
+</table></div>
+
+<h2>Timing</h2>
+<p class="legend">Offsets are measured from each session's first timestamped record. Span includes idle time.</p>
+<div class="scroll"><table>
+<tr><th>Field</th><th>A</th><th>B</th></tr>
+<tr><td>first record</td><td class="">2025-11-13 09:00:00Z</td><td class="">2026-11-02 11:00:00Z</td></tr>
+<tr><td>last record</td><td class="">2025-11-13 09:01:00Z</td><td class="">2026-11-02 11:01:52Z</td></tr>
+<tr><td>span (first to last record)</td><td class="">1m00s</td><td class="">1m52s</td></tr>
+<tr><td>first file change</td><td class="">&#43;10.0s</td><td class="">&#43;40.4s</td></tr>
+<tr><td>last file change</td><td class="">&#43;12.0s</td><td class="">&#43;40.4s</td></tr>
+<tr><td>first command</td><td class="">&#43;5.0s</td><td class="">&#43;7.5s</td></tr>
+<tr><td>first test run</td><td class="">&#43;5.0s</td><td class="">&#43;7.5s</td></tr>
+<tr><td>first passing test run</td><td class="">&#43;20.0s</td><td class="">&#43;7.5s</td></tr>
+<tr><td>recorded command time</td><td class="">13.8s (3/4 commands)</td><td class="">5.3s (5/5 commands)</td></tr>
+</table></div>
+
+<h2>File changes</h2>
+<p class="legend"><span class="m-same">=</span> same net effect · <span class="m-diff">~</span> different net effect · <span class="m-a">A</span>/<span class="m-b">B</span> only in one session · <code>*</code> line counts are partial. Only edits made through the agents' file-edit tools are recorded; shell commands that change files are not detected.</p>
+<div class="scroll"><table>
+<tr><th></th><th>Path</th><th>A</th><th>B</th></tr>
+<tr><td class="mark m-a">A</td><td class="path mono">api/limits.py</td><td class="">renamed -&gt; api/rate_limits.py &#43;1/-1</td><td class="absent">-</td></tr>
+<tr><td class="mark m-a">A</td><td class="path mono">api/old.py</td><td class="">deleted (line counts not recorded)</td><td class="absent">-</td></tr>
+<tr><td class="mark m-a">A</td><td class="path mono">api/views.py</td><td class="">not applied (1 not applied)</td><td class="absent">-</td></tr>
+<tr><td class="mark m-b">B</td><td class="path mono">config/config.go</td><td class="absent">-</td><td class="">modified &#43;3/-0</td></tr>
+<tr><td class="mark m-b">B</td><td class="path mono">config/validate.go</td><td class="absent">-</td><td class="">created &#43;10/-0</td></tr>
+</table></div>
+
+<h2>Commands</h2>
+<p class="legend">Matched by exact command text (whitespace normalized). Commands are shown as logged and were never executed.</p>
+<div class="scroll"><table>
+<tr><th></th><th>Command</th><th>Test</th><th>A</th><th>B</th></tr>
+<tr><td class="mark m-a">A</td><td class="cmd mono">pytest -q</td><td class="muted">pytest</td><td class="bad">failed [exit 1]</td><td class="absent">-</td></tr>
+<tr><td class="mark m-a">A</td><td class="cmd mono">npm test</td><td class="muted">npm test</td><td class="">ok [exit 0]</td><td class="absent">-</td></tr>
+<tr><td class="mark m-a">A</td><td class="cmd mono">cargo test</td><td class="muted">cargo test</td><td class="bad">failed [exit 101]</td><td class="absent">-</td></tr>
+<tr><td class="mark m-a">A</td><td class="cmd mono">make deploy</td><td class="muted"></td><td class="">unknown</td><td class="absent">-</td></tr>
+<tr><td class="mark m-b">B</td><td class="cmd mono">go test ./...</td><td class="muted">go test</td><td class="absent">-</td><td class="">ok [exit 0]</td></tr>
+<tr><td class="mark m-b">B</td><td class="cmd mono">go test ./config/ -run &#34;TestParse|TestValidate&#34; -v</td><td class="muted">go test</td><td class="absent">-</td><td class="">ok [exit 0]</td></tr>
+<tr><td class="mark m-b">B</td><td class="cmd mono">go vet ./...</td><td class="muted"></td><td class="absent">-</td><td class="">ok [exit 0]</td></tr>
+<tr><td class="mark m-b">B</td><td class="cmd mono">Remove-Item config\legacy_port.go</td><td class="muted"></td><td class="absent">-</td><td class="">ok [exit 0]</td></tr>
+<tr><td class="mark m-b">B</td><td class="cmd mono">git status --short</td><td class="muted"></td><td class="absent">-</td><td class="">ok [exit 0]</td></tr>
+</table></div>
+
+<h2>Test runs</h2>
+<p class="legend">A test run is a command whose text starts a known test runner. Outcome is the recorded command status; counts appear only when the recorded output contains a runner summary line.</p>
+<div class="card" style="margin-bottom:12px">
+<h3><span class="tag a">A</span> 3 run(s): 1 passed, 2 failed</h3>
+<div class="scroll" style="border:0"><table>
+<tr><th>Cmd</th><th>Time</th><th>Outcome</th><th>Runner</th><th>Counts</th><th>Command</th></tr>
+<tr><td class="mono">#1</td><td class="mono ">2025-11-13 09:00:05Z</td><td class="bad">failed</td><td>pytest</td><td class="">3 passed, 1 failed</td><td class="cmd mono">pytest -q</td></tr>
+<tr><td class="mono">#2</td><td class="mono ">2025-11-13 09:00:20Z</td><td class="">passed</td><td>npm test</td><td class="">4 passed, 0 failed</td><td class="cmd mono">npm test</td></tr>
+<tr><td class="mono">#3</td><td class="mono ">2025-11-13 09:00:30Z</td><td class="bad">failed</td><td>cargo test</td><td class="">7 passed, 1 failed</td><td class="cmd mono">cargo test</td></tr>
+</table></div>
+</div><div class="card" style="margin-bottom:12px">
+<h3><span class="tag b">B</span> 2 run(s): 2 passed, 0 failed</h3>
+<div class="scroll" style="border:0"><table>
+<tr><th>Cmd</th><th>Time</th><th>Outcome</th><th>Runner</th><th>Counts</th><th>Command</th></tr>
+<tr><td class="mono">#1</td><td class="mono ">2026-11-02 11:00:07Z</td><td class="">passed</td><td>go test</td><td class="">2 passed, 0 failed packages</td><td class="cmd mono">go test ./...</td></tr>
+<tr><td class="mono">#2</td><td class="mono ">2026-11-02 11:01:16Z</td><td class="">passed</td><td>go test</td><td class="">3 passed, 0 failed</td><td class="cmd mono">go test ./config/ -run &#34;TestParse|TestValidate&#34; -v</td></tr>
+</table></div>
+</div>
+
+<h2>Field support</h2>
+<p class="legend">How completely each compared field is backed by the export. Anything not <i>recorded</i> is shown as missing or partial; nothing is filled in by inference.</p>
+<div class="scroll"><table>
+<tr><th>Field</th><th>A</th><th>B</th><th>Notes</th></tr>
+<tr><td class="mono">file_changes</td><td><span class="lvl lvl-partial">partial (3 recorded)</span></td><td><span class="lvl lvl-partial">partial (2 recorded)</span></td><td class="muted">Only changes made through the agent&#39;s file-edit tools are counted. Files changed by shell commands (sed -i, git checkout, rm, output redirects) are not detected.</td></tr>
+<tr><td class="mono">file_changes.line_counts</td><td><span class="lvl lvl-partial">partial (2/3 changes)</span></td><td><span class="lvl lvl-recorded">recorded (2/2 changes)</span></td><td class="muted">From FileChange unified diffs or apply_patch hunks.</td></tr>
+<tr><td class="mono">file_changes.status</td><td><span class="lvl lvl-recorded">recorded (3/3 changes)</span></td><td><span class="lvl lvl-recorded">recorded (2/2 changes)</span></td><td class="muted">unknown = no tool result recorded for the edit</td></tr>
+<tr><td class="mono">file_changes.timestamp</td><td><span class="lvl lvl-recorded">recorded (3/3 changes)</span></td><td><span class="lvl lvl-recorded">recorded (2/2 changes)</span></td><td class="muted"></td></tr>
+<tr><td class="mono">commands</td><td><span class="lvl lvl-recorded">recorded (4 recorded)</span></td><td><span class="lvl lvl-partial">partial (5 recorded)</span></td><td class="muted">B: 2 Codex unified-exec script cell(s) are not decoded; commands they ran are counted only where the export has CommandExecution items.</td></tr>
+<tr><td class="mono">commands.status</td><td><span class="lvl lvl-partial">partial (3/4 commands)</span></td><td><span class="lvl lvl-recorded">recorded (5/5 commands)</span></td><td class="muted">unknown = no tool result recorded</td></tr>
+<tr><td class="mono">commands.exit_code</td><td><span class="lvl lvl-partial">partial (3/4 commands)</span></td><td><span class="lvl lvl-recorded">recorded (5/5 commands)</span></td><td class="muted">From CommandExecution.exit_code, legacy &#34;Exit code: N&#34; output, or shell output metadata.</td></tr>
+<tr><td class="mono">commands.duration</td><td><span class="lvl lvl-partial">partial (3/4 commands)</span></td><td><span class="lvl lvl-recorded">recorded (5/5 commands)</span></td><td class="muted">From CommandExecution.duration, &#34;Wall time&#34; output, or shell output metadata.</td></tr>
+<tr><td class="mono">commands.cwd</td><td><span class="lvl lvl-partial">partial (3/4 commands)</span></td><td><span class="lvl lvl-recorded">recorded (5/5 commands)</span></td><td class="muted">From CommandExecution.cwd or the workdir argument.</td></tr>
+<tr><td class="mono">commands.timestamp</td><td><span class="lvl lvl-recorded">recorded (4/4 commands)</span></td><td><span class="lvl lvl-recorded">recorded (5/5 commands)</span></td><td class="muted">CommandExecution items: completion time. Legacy shell calls: call time.</td></tr>
+<tr><td class="mono">tests</td><td><span class="lvl lvl-partial">partial</span></td><td><span class="lvl lvl-partial">partial</span></td><td class="muted">Test runs are commands whose text starts a known test runner; outcome is the recorded command status. Tests run inside scripts or other tools are not detected.</td></tr>
+<tr><td class="mono">tests.counts</td><td><span class="lvl lvl-recorded">recorded (3/3 test runs)</span></td><td><span class="lvl lvl-recorded">recorded (2/2 test runs)</span></td><td class="muted">Counts come only from a runner summary line in the recorded output (go, pytest, jest/vitest, cargo).</td></tr>
+<tr><td class="mono">session.timestamps</td><td><span class="lvl lvl-recorded">recorded (16/16 records)</span></td><td><span class="lvl lvl-recorded">recorded (20/20 records)</span></td><td class="muted">Span = first to last timestamped record; idle time is included.</td></tr>
+<tr><td class="mono">session.model</td><td><span class="lvl lvl-recorded">recorded</span></td><td><span class="lvl lvl-recorded">recorded</span></td><td class="muted"></td></tr>
+<tr><td class="mono">session.agent_version</td><td><span class="lvl lvl-recorded">recorded</span></td><td><span class="lvl lvl-recorded">recorded</span></td><td class="muted"></td></tr>
+<tr><td class="mono">session.git_branch</td><td><span class="lvl lvl-not-recorded">not recorded</span></td><td><span class="lvl lvl-recorded">recorded</span></td><td class="muted"></td></tr>
+<tr><td class="mono">session.cwd</td><td><span class="lvl lvl-recorded">recorded</span></td><td><span class="lvl lvl-recorded">recorded</span></td><td class="muted"></td></tr>
+<tr><td class="mono">token_usage</td><td><span class="lvl lvl-unsupported">unsupported</span></td><td><span class="lvl lvl-unsupported">unsupported</span></td><td class="muted">Recorded by both formats but not compared by this tool.</td></tr>
+<tr><td class="mono">assistant_messages</td><td><span class="lvl lvl-unsupported">unsupported</span></td><td><span class="lvl lvl-unsupported">unsupported</span></td><td class="muted">Conversation text and reasoning are not compared.</td></tr>
+</table></div>
+
+<h2>Not compared</h2>
+<div class="sides">
+<div class="card"><h3><span class="tag a">A</span> legacy.jsonl</h3>
+<div class="muted">Other tool calls (reads, searches, web, MCP):</div>
+<div class="mono">update_plan&nbsp;×1</div>
+<details><summary>Record types present but not interpreted (1)</summary>
+<div class="mono">event_msg/turn_aborted&nbsp;×1</div></details>
+
+</div>
+<div class="card"><h3><span class="tag b">B</span> codex-session.jsonl</h3>
+<div class="muted">Other tool calls (reads, searches, web, MCP):</div>
+<div class="mono">exec&nbsp;×2</div>
+<details><summary>Record types present but not interpreted (5)</summary>
+<div class="mono">response_item/message&nbsp;×2, event_msg/task_complete&nbsp;×1, event_msg/task_started&nbsp;×1, event_msg/token_count&nbsp;×1, response_item/reasoning&nbsp;×1</div></details>
+
+</div>
+</div>
+
+<footer>Generated by agent-session-diff (report schema 1). The report is a deterministic function of the two input files and the chosen options; it contains no generation timestamp.</footer>
+</main>
+</body>
+</html>

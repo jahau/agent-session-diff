@@ -1,0 +1,1279 @@
+{
+  "tool": "agent-session-diff",
+  "schema_version": 1,
+  "redaction": [
+    "secrets",
+    "paths"
+  ],
+  "summary": {
+    "files_both": 1,
+    "files_both_differ": 0,
+    "files_only_a": 1,
+    "files_only_b": 1,
+    "commands_both": 2,
+    "commands_only_a": 2,
+    "commands_only_b": 3
+  },
+  "overview": [
+    {
+      "field": "format",
+      "a": "claude-code",
+      "b": "codex",
+      "differs": true
+    },
+    {
+      "field": "agent version",
+      "a": "2.1.40",
+      "b": "0.98.0",
+      "differs": true
+    },
+    {
+      "field": "session id",
+      "a": "5f1c2a9e-0b7d-4c3e-9a61-2d8e4f7b1c03",
+      "b": "019a7f00-1111-7222-8333-944455556666",
+      "differs": true
+    },
+    {
+      "field": "model",
+      "a": "claude-opus-5-5",
+      "b": "gpt-5.3-codex",
+      "differs": true
+    },
+    {
+      "field": "git branch",
+      "a": "fix/port-validation",
+      "b": "fix/port-validation",
+      "differs": false
+    },
+    {
+      "field": "working directory",
+      "a": "<cwd>",
+      "b": "<cwd>",
+      "differs": false
+    },
+    {
+      "field": "records (lines)",
+      "a": "24 (24)",
+      "b": "20 (20)",
+      "differs": true
+    },
+    {
+      "field": "malformed records",
+      "a": "0",
+      "b": "0",
+      "differs": false
+    },
+    {
+      "field": "file changes",
+      "a": "3",
+      "b": "2",
+      "differs": true
+    },
+    {
+      "field": "files touched",
+      "a": "2",
+      "b": "2",
+      "differs": false
+    },
+    {
+      "field": "commands",
+      "a": "6",
+      "b": "5",
+      "differs": true
+    },
+    {
+      "field": "commands failed",
+      "a": "1",
+      "b": "0",
+      "differs": true
+    },
+    {
+      "field": "commands without result",
+      "a": "0",
+      "b": "0",
+      "differs": false
+    },
+    {
+      "field": "test runs",
+      "a": "4",
+      "b": "2",
+      "differs": true
+    },
+    {
+      "field": "last test run",
+      "a": "passed (go test)",
+      "b": "passed (go test)",
+      "differs": false
+    }
+  ],
+  "timing": [
+    {
+      "field": "first record",
+      "a": "2026-11-02 10:00:00Z",
+      "b": "2026-11-02 11:00:00Z",
+      "differs": true
+    },
+    {
+      "field": "last record",
+      "a": "2026-11-02 10:04:30Z",
+      "b": "2026-11-02 11:01:52Z",
+      "differs": true
+    },
+    {
+      "field": "span (first to last record)",
+      "a": "4m30s",
+      "b": "1m52s",
+      "differs": true
+    },
+    {
+      "field": "first file change",
+      "a": "+1m10s",
+      "b": "+40.4s",
+      "differs": true
+    },
+    {
+      "field": "last file change",
+      "a": "+3m00s",
+      "b": "+40.4s",
+      "differs": true
+    },
+    {
+      "field": "first command",
+      "a": "+5.1s",
+      "b": "+7.5s",
+      "differs": true
+    },
+    {
+      "field": "first test run",
+      "a": "+5.1s",
+      "b": "+7.5s",
+      "differs": true
+    },
+    {
+      "field": "first passing test run",
+      "a": "+5.1s",
+      "b": "+7.5s",
+      "differs": true
+    },
+    {
+      "field": "recorded command time",
+      "a": "not recorded",
+      "b": "5.3s (5/5 commands)",
+      "differs": true
+    }
+  ],
+  "files": [
+    {
+      "path": "config/config.go",
+      "presence": "both",
+      "same_net_effect": true,
+      "a": {
+        "changes": 2,
+        "ops": [
+          "modify",
+          "modify"
+        ],
+        "net_effect": "modified",
+        "lines_added": 4,
+        "lines_removed": 1,
+        "line_counts_complete": true,
+        "changes_with_line_counts": 2,
+        "changes_not_applied": 0,
+        "tools": [
+          "Edit"
+        ]
+      },
+      "b": {
+        "changes": 1,
+        "ops": [
+          "modify"
+        ],
+        "net_effect": "modified",
+        "lines_added": 3,
+        "lines_removed": 0,
+        "line_counts_complete": true,
+        "changes_with_line_counts": 1,
+        "changes_not_applied": 0,
+        "tools": [
+          "FileChange"
+        ]
+      }
+    },
+    {
+      "path": "config/config_test.go",
+      "presence": "a-only",
+      "same_net_effect": false,
+      "a": {
+        "changes": 1,
+        "ops": [
+          "create"
+        ],
+        "net_effect": "created",
+        "lines_added": 15,
+        "lines_removed": 0,
+        "line_counts_complete": true,
+        "changes_with_line_counts": 1,
+        "changes_not_applied": 0,
+        "tools": [
+          "Write"
+        ]
+      }
+    },
+    {
+      "path": "config/validate.go",
+      "presence": "b-only",
+      "same_net_effect": false,
+      "b": {
+        "changes": 1,
+        "ops": [
+          "create"
+        ],
+        "net_effect": "created",
+        "lines_added": 10,
+        "lines_removed": 0,
+        "line_counts_complete": true,
+        "changes_with_line_counts": 1,
+        "changes_not_applied": 0,
+        "tools": [
+          "FileChange"
+        ]
+      }
+    }
+  ],
+  "commands": [
+    {
+      "text": "go test ./...",
+      "presence": "both",
+      "test_runner": "go test",
+      "a": {
+        "runs": 2,
+        "succeeded": 2,
+        "failed": 0,
+        "other": 0,
+        "exit_codes": [],
+        "first_seq": 1,
+        "last_status": "succeeded"
+      },
+      "b": {
+        "runs": 1,
+        "succeeded": 1,
+        "failed": 0,
+        "other": 0,
+        "exit_codes": [
+          0
+        ],
+        "first_seq": 1,
+        "last_status": "succeeded"
+      }
+    },
+    {
+      "text": "cd <cwd> && go test ./config/ -run TestParse -v",
+      "presence": "a-only",
+      "test_runner": "go test",
+      "a": {
+        "runs": 2,
+        "succeeded": 1,
+        "failed": 1,
+        "other": 0,
+        "exit_codes": [
+          1
+        ],
+        "first_seq": 2,
+        "last_status": "succeeded"
+      }
+    },
+    {
+      "text": "export DEPLOY_TOKEN=[REDACTED:assignment] && curl -H \"Authorization: Bearer [REDACTED:bearer-token]\" https://deploy.example.invalid/hook",
+      "presence": "a-only",
+      "a": {
+        "runs": 1,
+        "succeeded": 0,
+        "failed": 0,
+        "other": 1,
+        "exit_codes": [],
+        "first_seq": 5,
+        "last_status": "rejected"
+      }
+    },
+    {
+      "text": "git status --short",
+      "presence": "both",
+      "a": {
+        "runs": 1,
+        "succeeded": 1,
+        "failed": 0,
+        "other": 0,
+        "exit_codes": [],
+        "first_seq": 6,
+        "last_status": "succeeded"
+      },
+      "b": {
+        "runs": 1,
+        "succeeded": 1,
+        "failed": 0,
+        "other": 0,
+        "exit_codes": [
+          0
+        ],
+        "first_seq": 5,
+        "last_status": "succeeded"
+      }
+    },
+    {
+      "text": "go test ./config/ -run \"TestParse|TestValidate\" -v",
+      "presence": "b-only",
+      "test_runner": "go test",
+      "b": {
+        "runs": 1,
+        "succeeded": 1,
+        "failed": 0,
+        "other": 0,
+        "exit_codes": [
+          0
+        ],
+        "first_seq": 2,
+        "last_status": "succeeded"
+      }
+    },
+    {
+      "text": "go vet ./...",
+      "presence": "b-only",
+      "b": {
+        "runs": 1,
+        "succeeded": 1,
+        "failed": 0,
+        "other": 0,
+        "exit_codes": [
+          0
+        ],
+        "first_seq": 3,
+        "last_status": "succeeded"
+      }
+    },
+    {
+      "text": "Remove-Item config\\legacy_port.go",
+      "presence": "b-only",
+      "b": {
+        "runs": 1,
+        "succeeded": 1,
+        "failed": 0,
+        "other": 0,
+        "exit_codes": [
+          0
+        ],
+        "first_seq": 4,
+        "last_status": "succeeded"
+      }
+    }
+  ],
+  "tests": [
+    {
+      "runs": 4,
+      "passed": 3,
+      "failed": 1,
+      "other": 0,
+      "last": {
+        "command_seq": 4,
+        "command": "go test ./...",
+        "runner": "go test",
+        "outcome": "passed",
+        "passed": 2,
+        "failed": 0,
+        "counts_source": "go test ok/FAIL lines (packages)",
+        "timestamp": "2026-11-02T10:03:40Z"
+      },
+      "runs_list": [
+        {
+          "command_seq": 1,
+          "command": "go test ./...",
+          "runner": "go test",
+          "outcome": "passed",
+          "passed": 2,
+          "failed": 0,
+          "counts_source": "go test ok/FAIL lines (packages)",
+          "timestamp": "2026-11-02T10:00:05.12Z"
+        },
+        {
+          "command_seq": 2,
+          "command": "cd <cwd> && go test ./config/ -run TestParse -v",
+          "runner": "go test",
+          "outcome": "failed",
+          "passed": 1,
+          "failed": 1,
+          "skipped": 0,
+          "counts_source": "go test -v result lines (tests)",
+          "timestamp": "2026-11-02T10:02:30Z"
+        },
+        {
+          "command_seq": 3,
+          "command": "cd <cwd> && go test ./config/ -run TestParse -v",
+          "runner": "go test",
+          "outcome": "passed",
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0,
+          "counts_source": "go test -v result lines (tests)",
+          "timestamp": "2026-11-02T10:03:20Z"
+        },
+        {
+          "command_seq": 4,
+          "command": "go test ./...",
+          "runner": "go test",
+          "outcome": "passed",
+          "passed": 2,
+          "failed": 0,
+          "counts_source": "go test ok/FAIL lines (packages)",
+          "timestamp": "2026-11-02T10:03:40Z"
+        }
+      ]
+    },
+    {
+      "runs": 2,
+      "passed": 2,
+      "failed": 0,
+      "other": 0,
+      "last": {
+        "command_seq": 2,
+        "command": "go test ./config/ -run \"TestParse|TestValidate\" -v",
+        "runner": "go test",
+        "outcome": "passed",
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "counts_source": "go test -v result lines (tests)",
+        "timestamp": "2026-11-02T11:01:16.9Z"
+      },
+      "runs_list": [
+        {
+          "command_seq": 1,
+          "command": "go test ./...",
+          "runner": "go test",
+          "outcome": "passed",
+          "passed": 2,
+          "failed": 0,
+          "counts_source": "go test ok/FAIL lines (packages)",
+          "timestamp": "2026-11-02T11:00:07.5Z"
+        },
+        {
+          "command_seq": 2,
+          "command": "go test ./config/ -run \"TestParse|TestValidate\" -v",
+          "runner": "go test",
+          "outcome": "passed",
+          "passed": 3,
+          "failed": 0,
+          "skipped": 0,
+          "counts_source": "go test -v result lines (tests)",
+          "timestamp": "2026-11-02T11:01:16.9Z"
+        }
+      ]
+    }
+  ],
+  "field_support": [
+    {
+      "field": "file_changes",
+      "a": {
+        "field": "file_changes",
+        "level": "partial",
+        "coverage": "3 recorded",
+        "note": "Only changes made through the agent's file-edit tools are counted. Files changed by shell commands (sed -i, git checkout, rm, output redirects) are not detected."
+      },
+      "b": {
+        "field": "file_changes",
+        "level": "partial",
+        "coverage": "2 recorded",
+        "note": "Only changes made through the agent's file-edit tools are counted. Files changed by shell commands (sed -i, git checkout, rm, output redirects) are not detected."
+      }
+    },
+    {
+      "field": "file_changes.line_counts",
+      "a": {
+        "field": "file_changes.line_counts",
+        "level": "recorded",
+        "coverage": "3/3 changes",
+        "note": "From the edit tool's structuredPatch, or the full content of a newly created file."
+      },
+      "b": {
+        "field": "file_changes.line_counts",
+        "level": "recorded",
+        "coverage": "2/2 changes",
+        "note": "From FileChange unified diffs or apply_patch hunks."
+      }
+    },
+    {
+      "field": "file_changes.status",
+      "a": {
+        "field": "file_changes.status",
+        "level": "recorded",
+        "coverage": "3/3 changes",
+        "note": "unknown = no tool result recorded for the edit"
+      },
+      "b": {
+        "field": "file_changes.status",
+        "level": "recorded",
+        "coverage": "2/2 changes",
+        "note": "unknown = no tool result recorded for the edit"
+      }
+    },
+    {
+      "field": "file_changes.timestamp",
+      "a": {
+        "field": "file_changes.timestamp",
+        "level": "recorded",
+        "coverage": "3/3 changes"
+      },
+      "b": {
+        "field": "file_changes.timestamp",
+        "level": "recorded",
+        "coverage": "2/2 changes"
+      }
+    },
+    {
+      "field": "commands",
+      "a": {
+        "field": "commands",
+        "level": "recorded",
+        "coverage": "6 recorded"
+      },
+      "b": {
+        "field": "commands",
+        "level": "partial",
+        "coverage": "5 recorded",
+        "note": "2 Codex unified-exec script cell(s) are not decoded; commands they ran are counted only where the export has CommandExecution items."
+      }
+    },
+    {
+      "field": "commands.status",
+      "a": {
+        "field": "commands.status",
+        "level": "recorded",
+        "coverage": "6/6 commands",
+        "note": "unknown = no tool result recorded"
+      },
+      "b": {
+        "field": "commands.status",
+        "level": "recorded",
+        "coverage": "5/5 commands",
+        "note": "unknown = no tool result recorded"
+      }
+    },
+    {
+      "field": "commands.exit_code",
+      "a": {
+        "field": "commands.exit_code",
+        "level": "partial",
+        "coverage": "1/6 commands",
+        "note": "Claude Code states an exit code only in failed results (\"Exit code N\"); successful commands have a status but no exit code."
+      },
+      "b": {
+        "field": "commands.exit_code",
+        "level": "recorded",
+        "coverage": "5/5 commands",
+        "note": "From CommandExecution.exit_code, legacy \"Exit code: N\" output, or shell output metadata."
+      }
+    },
+    {
+      "field": "commands.duration",
+      "a": {
+        "field": "commands.duration",
+        "level": "not recorded",
+        "coverage": "0/6 commands",
+        "note": "Claude Code does not record command duration. It is not derived from timestamps."
+      },
+      "b": {
+        "field": "commands.duration",
+        "level": "recorded",
+        "coverage": "5/5 commands",
+        "note": "From CommandExecution.duration, \"Wall time\" output, or shell output metadata."
+      }
+    },
+    {
+      "field": "commands.cwd",
+      "a": {
+        "field": "commands.cwd",
+        "level": "not recorded",
+        "coverage": "0/6 commands",
+        "note": "Claude Code records a session cwd, not a per-command cwd."
+      },
+      "b": {
+        "field": "commands.cwd",
+        "level": "recorded",
+        "coverage": "5/5 commands",
+        "note": "From CommandExecution.cwd or the workdir argument."
+      }
+    },
+    {
+      "field": "commands.timestamp",
+      "a": {
+        "field": "commands.timestamp",
+        "level": "recorded",
+        "coverage": "6/6 commands",
+        "note": "Time of the tool-call record."
+      },
+      "b": {
+        "field": "commands.timestamp",
+        "level": "recorded",
+        "coverage": "5/5 commands",
+        "note": "CommandExecution items: completion time. Legacy shell calls: call time."
+      }
+    },
+    {
+      "field": "tests",
+      "a": {
+        "field": "tests",
+        "level": "partial",
+        "note": "Test runs are commands whose text starts a known test runner; outcome is the recorded command status. Tests run inside scripts or other tools are not detected."
+      },
+      "b": {
+        "field": "tests",
+        "level": "partial",
+        "note": "Test runs are commands whose text starts a known test runner; outcome is the recorded command status. Tests run inside scripts or other tools are not detected."
+      }
+    },
+    {
+      "field": "tests.counts",
+      "a": {
+        "field": "tests.counts",
+        "level": "recorded",
+        "coverage": "4/4 test runs",
+        "note": "Counts come only from a runner summary line in the recorded output (go, pytest, jest/vitest, cargo)."
+      },
+      "b": {
+        "field": "tests.counts",
+        "level": "recorded",
+        "coverage": "2/2 test runs",
+        "note": "Counts come only from a runner summary line in the recorded output (go, pytest, jest/vitest, cargo)."
+      }
+    },
+    {
+      "field": "session.timestamps",
+      "a": {
+        "field": "session.timestamps",
+        "level": "partial",
+        "coverage": "22/24 records",
+        "note": "Span = first to last timestamped record; idle time is included."
+      },
+      "b": {
+        "field": "session.timestamps",
+        "level": "recorded",
+        "coverage": "20/20 records",
+        "note": "Span = first to last timestamped record; idle time is included."
+      }
+    },
+    {
+      "field": "session.model",
+      "a": {
+        "field": "session.model",
+        "level": "recorded"
+      },
+      "b": {
+        "field": "session.model",
+        "level": "recorded"
+      }
+    },
+    {
+      "field": "session.agent_version",
+      "a": {
+        "field": "session.agent_version",
+        "level": "recorded"
+      },
+      "b": {
+        "field": "session.agent_version",
+        "level": "recorded"
+      }
+    },
+    {
+      "field": "session.git_branch",
+      "a": {
+        "field": "session.git_branch",
+        "level": "recorded"
+      },
+      "b": {
+        "field": "session.git_branch",
+        "level": "recorded"
+      }
+    },
+    {
+      "field": "session.cwd",
+      "a": {
+        "field": "session.cwd",
+        "level": "recorded"
+      },
+      "b": {
+        "field": "session.cwd",
+        "level": "recorded"
+      }
+    },
+    {
+      "field": "token_usage",
+      "a": {
+        "field": "token_usage",
+        "level": "unsupported",
+        "note": "Recorded by both formats but not compared by this tool."
+      },
+      "b": {
+        "field": "token_usage",
+        "level": "unsupported",
+        "note": "Recorded by both formats but not compared by this tool."
+      }
+    },
+    {
+      "field": "assistant_messages",
+      "a": {
+        "field": "assistant_messages",
+        "level": "unsupported",
+        "note": "Conversation text and reasoning are not compared."
+      },
+      "b": {
+        "field": "assistant_messages",
+        "level": "unsupported",
+        "note": "Conversation text and reasoning are not compared."
+      }
+    }
+  ],
+  "a": {
+    "label": "claude-code-session.jsonl",
+    "source_path": "claude-code-session.jsonl",
+    "format": "claude-code",
+    "session_ids": [
+      "5f1c2a9e-0b7d-4c3e-9a61-2d8e4f7b1c03"
+    ],
+    "agent_version": "2.1.40",
+    "cwd": "<cwd>",
+    "git_branch": "fix/port-validation",
+    "models": [
+      "claude-opus-5-5"
+    ],
+    "first_timestamp": "2026-11-02T10:00:00Z",
+    "last_timestamp": "2026-11-02T10:04:30Z",
+    "lines": 24,
+    "records": 24,
+    "malformed_records": 0,
+    "records_without_timestamp": 2,
+    "file_changes": [
+      {
+        "seq": 1,
+        "source_line": 7,
+        "path": "config/config.go",
+        "op": "modify",
+        "tool": "Edit",
+        "status": "succeeded",
+        "timestamp": "2026-11-02T10:01:10.3Z",
+        "lines_added": 3,
+        "lines_removed": 0
+      },
+      {
+        "seq": 2,
+        "source_line": 9,
+        "path": "config/config_test.go",
+        "op": "create",
+        "tool": "Write",
+        "status": "succeeded",
+        "timestamp": "2026-11-02T10:02:00Z",
+        "lines_added": 15,
+        "lines_removed": 0
+      },
+      {
+        "seq": 3,
+        "source_line": 13,
+        "path": "config/config.go",
+        "op": "modify",
+        "tool": "Edit",
+        "status": "succeeded",
+        "timestamp": "2026-11-02T10:03:00Z",
+        "lines_added": 1,
+        "lines_removed": 1
+      }
+    ],
+    "commands": [
+      {
+        "seq": 1,
+        "source_line": 3,
+        "text": "go test ./...",
+        "tool": "Bash",
+        "status": "succeeded",
+        "timestamp": "2026-11-02T10:00:05.12Z",
+        "timestamp_kind": "call",
+        "test_runner": "go test"
+      },
+      {
+        "seq": 2,
+        "source_line": 11,
+        "text": "cd <cwd> && go test ./config/ -run TestParse -v",
+        "tool": "Bash",
+        "status": "failed",
+        "exit_code": 1,
+        "timestamp": "2026-11-02T10:02:30Z",
+        "timestamp_kind": "call",
+        "test_runner": "go test"
+      },
+      {
+        "seq": 3,
+        "source_line": 15,
+        "text": "cd <cwd> && go test ./config/ -run TestParse -v",
+        "tool": "Bash",
+        "status": "succeeded",
+        "timestamp": "2026-11-02T10:03:20Z",
+        "timestamp_kind": "call",
+        "test_runner": "go test"
+      },
+      {
+        "seq": 4,
+        "source_line": 17,
+        "text": "go test ./...",
+        "tool": "Bash",
+        "status": "succeeded",
+        "timestamp": "2026-11-02T10:03:40Z",
+        "timestamp_kind": "call",
+        "test_runner": "go test"
+      },
+      {
+        "seq": 5,
+        "source_line": 19,
+        "text": "export DEPLOY_TOKEN=[REDACTED:assignment] && curl -H \"Authorization: Bearer [REDACTED:bearer-token]\" https://deploy.example.invalid/hook",
+        "tool": "Bash",
+        "status": "rejected",
+        "timestamp": "2026-11-02T10:04:05Z",
+        "timestamp_kind": "call"
+      },
+      {
+        "seq": 6,
+        "source_line": 21,
+        "text": "git status --short",
+        "tool": "Bash",
+        "status": "succeeded",
+        "timestamp": "2026-11-02T10:04:20Z",
+        "timestamp_kind": "call"
+      }
+    ],
+    "tests": [
+      {
+        "command_seq": 1,
+        "command": "go test ./...",
+        "runner": "go test",
+        "outcome": "passed",
+        "passed": 2,
+        "failed": 0,
+        "counts_source": "go test ok/FAIL lines (packages)",
+        "timestamp": "2026-11-02T10:00:05.12Z"
+      },
+      {
+        "command_seq": 2,
+        "command": "cd <cwd> && go test ./config/ -run TestParse -v",
+        "runner": "go test",
+        "outcome": "failed",
+        "passed": 1,
+        "failed": 1,
+        "skipped": 0,
+        "counts_source": "go test -v result lines (tests)",
+        "timestamp": "2026-11-02T10:02:30Z"
+      },
+      {
+        "command_seq": 3,
+        "command": "cd <cwd> && go test ./config/ -run TestParse -v",
+        "runner": "go test",
+        "outcome": "passed",
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "counts_source": "go test -v result lines (tests)",
+        "timestamp": "2026-11-02T10:03:20Z"
+      },
+      {
+        "command_seq": 4,
+        "command": "go test ./...",
+        "runner": "go test",
+        "outcome": "passed",
+        "passed": 2,
+        "failed": 0,
+        "counts_source": "go test ok/FAIL lines (packages)",
+        "timestamp": "2026-11-02T10:03:40Z"
+      }
+    ],
+    "record_types_not_interpreted": [
+      {
+        "name": "ai-title",
+        "count": 1
+      },
+      {
+        "name": "file-history-snapshot",
+        "count": 1
+      }
+    ],
+    "other_tool_calls": [
+      {
+        "name": "Read",
+        "count": 1
+      }
+    ],
+    "field_support": [
+      {
+        "field": "file_changes",
+        "level": "partial",
+        "coverage": "3 recorded",
+        "note": "Only changes made through the agent's file-edit tools are counted. Files changed by shell commands (sed -i, git checkout, rm, output redirects) are not detected."
+      },
+      {
+        "field": "file_changes.line_counts",
+        "level": "recorded",
+        "coverage": "3/3 changes",
+        "note": "From the edit tool's structuredPatch, or the full content of a newly created file."
+      },
+      {
+        "field": "file_changes.status",
+        "level": "recorded",
+        "coverage": "3/3 changes",
+        "note": "unknown = no tool result recorded for the edit"
+      },
+      {
+        "field": "file_changes.timestamp",
+        "level": "recorded",
+        "coverage": "3/3 changes"
+      },
+      {
+        "field": "commands",
+        "level": "recorded",
+        "coverage": "6 recorded"
+      },
+      {
+        "field": "commands.status",
+        "level": "recorded",
+        "coverage": "6/6 commands",
+        "note": "unknown = no tool result recorded"
+      },
+      {
+        "field": "commands.exit_code",
+        "level": "partial",
+        "coverage": "1/6 commands",
+        "note": "Claude Code states an exit code only in failed results (\"Exit code N\"); successful commands have a status but no exit code."
+      },
+      {
+        "field": "commands.duration",
+        "level": "not recorded",
+        "coverage": "0/6 commands",
+        "note": "Claude Code does not record command duration. It is not derived from timestamps."
+      },
+      {
+        "field": "commands.cwd",
+        "level": "not recorded",
+        "coverage": "0/6 commands",
+        "note": "Claude Code records a session cwd, not a per-command cwd."
+      },
+      {
+        "field": "commands.timestamp",
+        "level": "recorded",
+        "coverage": "6/6 commands",
+        "note": "Time of the tool-call record."
+      },
+      {
+        "field": "tests",
+        "level": "partial",
+        "note": "Test runs are commands whose text starts a known test runner; outcome is the recorded command status. Tests run inside scripts or other tools are not detected."
+      },
+      {
+        "field": "tests.counts",
+        "level": "recorded",
+        "coverage": "4/4 test runs",
+        "note": "Counts come only from a runner summary line in the recorded output (go, pytest, jest/vitest, cargo)."
+      },
+      {
+        "field": "session.timestamps",
+        "level": "partial",
+        "coverage": "22/24 records",
+        "note": "Span = first to last timestamped record; idle time is included."
+      },
+      {
+        "field": "session.model",
+        "level": "recorded"
+      },
+      {
+        "field": "session.agent_version",
+        "level": "recorded"
+      },
+      {
+        "field": "session.git_branch",
+        "level": "recorded"
+      },
+      {
+        "field": "session.cwd",
+        "level": "recorded"
+      },
+      {
+        "field": "token_usage",
+        "level": "unsupported",
+        "note": "Recorded by both formats but not compared by this tool."
+      },
+      {
+        "field": "assistant_messages",
+        "level": "unsupported",
+        "note": "Conversation text and reasoning are not compared."
+      }
+    ],
+    "warnings": [],
+    "warnings_total": 0
+  },
+  "b": {
+    "label": "codex-session.jsonl",
+    "source_path": "codex-session.jsonl",
+    "format": "codex",
+    "session_ids": [
+      "019a7f00-1111-7222-8333-944455556666"
+    ],
+    "agent_version": "0.98.0",
+    "cwd": "<cwd>",
+    "git_branch": "fix/port-validation",
+    "models": [
+      "gpt-5.3-codex"
+    ],
+    "first_timestamp": "2026-11-02T11:00:00Z",
+    "last_timestamp": "2026-11-02T11:01:52.1Z",
+    "lines": 20,
+    "records": 20,
+    "malformed_records": 0,
+    "records_without_timestamp": 0,
+    "file_changes": [
+      {
+        "seq": 1,
+        "source_line": 10,
+        "path": "config/config.go",
+        "op": "modify",
+        "tool": "FileChange",
+        "status": "succeeded",
+        "timestamp": "2026-11-02T11:00:40.4Z",
+        "lines_added": 3,
+        "lines_removed": 0
+      },
+      {
+        "seq": 2,
+        "source_line": 10,
+        "path": "config/validate.go",
+        "op": "create",
+        "tool": "FileChange",
+        "status": "succeeded",
+        "timestamp": "2026-11-02T11:00:40.4Z",
+        "lines_added": 10,
+        "lines_removed": 0
+      }
+    ],
+    "commands": [
+      {
+        "seq": 1,
+        "source_line": 7,
+        "text": "go test ./...",
+        "tool": "CommandExecution",
+        "status": "succeeded",
+        "exit_code": 0,
+        "duration_ms": 1210,
+        "timestamp": "2026-11-02T11:00:07.5Z",
+        "timestamp_kind": "completion",
+        "cwd": "<cwd>",
+        "test_runner": "go test"
+      },
+      {
+        "seq": 2,
+        "source_line": 13,
+        "text": "go test ./config/ -run \"TestParse|TestValidate\" -v",
+        "tool": "CommandExecution",
+        "status": "succeeded",
+        "exit_code": 0,
+        "duration_ms": 1870,
+        "timestamp": "2026-11-02T11:01:16.9Z",
+        "timestamp_kind": "completion",
+        "cwd": "<cwd>",
+        "test_runner": "go test"
+      },
+      {
+        "seq": 3,
+        "source_line": 14,
+        "text": "go vet ./...",
+        "tool": "CommandExecution",
+        "status": "succeeded",
+        "exit_code": 0,
+        "duration_ms": 2050,
+        "timestamp": "2026-11-02T11:01:30Z",
+        "timestamp_kind": "completion",
+        "cwd": "<cwd>"
+      },
+      {
+        "seq": 4,
+        "source_line": 15,
+        "text": "Remove-Item config\\legacy_port.go",
+        "tool": "CommandExecution",
+        "status": "succeeded",
+        "exit_code": 0,
+        "duration_ms": 90,
+        "timestamp": "2026-11-02T11:01:41Z",
+        "timestamp_kind": "completion",
+        "cwd": "<cwd>"
+      },
+      {
+        "seq": 5,
+        "source_line": 16,
+        "text": "git status --short",
+        "tool": "CommandExecution",
+        "status": "succeeded",
+        "exit_code": 0,
+        "duration_ms": 60,
+        "timestamp": "2026-11-02T11:01:50Z",
+        "timestamp_kind": "completion",
+        "cwd": "<cwd>"
+      }
+    ],
+    "tests": [
+      {
+        "command_seq": 1,
+        "command": "go test ./...",
+        "runner": "go test",
+        "outcome": "passed",
+        "passed": 2,
+        "failed": 0,
+        "counts_source": "go test ok/FAIL lines (packages)",
+        "timestamp": "2026-11-02T11:00:07.5Z"
+      },
+      {
+        "command_seq": 2,
+        "command": "go test ./config/ -run \"TestParse|TestValidate\" -v",
+        "runner": "go test",
+        "outcome": "passed",
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "counts_source": "go test -v result lines (tests)",
+        "timestamp": "2026-11-02T11:01:16.9Z"
+      }
+    ],
+    "record_types_not_interpreted": [
+      {
+        "name": "response_item/message",
+        "count": 2
+      },
+      {
+        "name": "event_msg/task_complete",
+        "count": 1
+      },
+      {
+        "name": "event_msg/task_started",
+        "count": 1
+      },
+      {
+        "name": "event_msg/token_count",
+        "count": 1
+      },
+      {
+        "name": "response_item/reasoning",
+        "count": 1
+      }
+    ],
+    "other_tool_calls": [
+      {
+        "name": "exec",
+        "count": 2
+      }
+    ],
+    "field_support": [
+      {
+        "field": "file_changes",
+        "level": "partial",
+        "coverage": "2 recorded",
+        "note": "Only changes made through the agent's file-edit tools are counted. Files changed by shell commands (sed -i, git checkout, rm, output redirects) are not detected."
+      },
+      {
+        "field": "file_changes.line_counts",
+        "level": "recorded",
+        "coverage": "2/2 changes",
+        "note": "From FileChange unified diffs or apply_patch hunks."
+      },
+      {
+        "field": "file_changes.status",
+        "level": "recorded",
+        "coverage": "2/2 changes",
+        "note": "unknown = no tool result recorded for the edit"
+      },
+      {
+        "field": "file_changes.timestamp",
+        "level": "recorded",
+        "coverage": "2/2 changes"
+      },
+      {
+        "field": "commands",
+        "level": "partial",
+        "coverage": "5 recorded",
+        "note": "2 Codex unified-exec script cell(s) are not decoded; commands they ran are counted only where the export has CommandExecution items."
+      },
+      {
+        "field": "commands.status",
+        "level": "recorded",
+        "coverage": "5/5 commands",
+        "note": "unknown = no tool result recorded"
+      },
+      {
+        "field": "commands.exit_code",
+        "level": "recorded",
+        "coverage": "5/5 commands",
+        "note": "From CommandExecution.exit_code, legacy \"Exit code: N\" output, or shell output metadata."
+      },
+      {
+        "field": "commands.duration",
+        "level": "recorded",
+        "coverage": "5/5 commands",
+        "note": "From CommandExecution.duration, \"Wall time\" output, or shell output metadata."
+      },
+      {
+        "field": "commands.cwd",
+        "level": "recorded",
+        "coverage": "5/5 commands",
+        "note": "From CommandExecution.cwd or the workdir argument."
+      },
+      {
+        "field": "commands.timestamp",
+        "level": "recorded",
+        "coverage": "5/5 commands",
+        "note": "CommandExecution items: completion time. Legacy shell calls: call time."
+      },
+      {
+        "field": "tests",
+        "level": "partial",
+        "note": "Test runs are commands whose text starts a known test runner; outcome is the recorded command status. Tests run inside scripts or other tools are not detected."
+      },
+      {
+        "field": "tests.counts",
+        "level": "recorded",
+        "coverage": "2/2 test runs",
+        "note": "Counts come only from a runner summary line in the recorded output (go, pytest, jest/vitest, cargo)."
+      },
+      {
+        "field": "session.timestamps",
+        "level": "recorded",
+        "coverage": "20/20 records",
+        "note": "Span = first to last timestamped record; idle time is included."
+      },
+      {
+        "field": "session.model",
+        "level": "recorded"
+      },
+      {
+        "field": "session.agent_version",
+        "level": "recorded"
+      },
+      {
+        "field": "session.git_branch",
+        "level": "recorded"
+      },
+      {
+        "field": "session.cwd",
+        "level": "recorded"
+      },
+      {
+        "field": "token_usage",
+        "level": "unsupported",
+        "note": "Recorded by both formats but not compared by this tool."
+      },
+      {
+        "field": "assistant_messages",
+        "level": "unsupported",
+        "note": "Conversation text and reasoning are not compared."
+      }
+    ],
+    "warnings": [],
+    "warnings_total": 0
+  }
+}

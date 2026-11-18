@@ -1,0 +1,78 @@
+agent-session-diff: comparing two session exports
+  A  claude-code-session.jsonl  (claude-code 2.1.40)
+  B  codex-session.jsonl  (codex 0.98.0)
+  redaction: off
+  files: 1 in both (0 differ), 1 only in A, 1 only in B
+  commands: 2 in both, 2 only in A, 3 only in B
+  tests: A 4 run(s): 3 passed, 1 failed | B 2 run(s): 2 passed, 0 failed
+
+OVERVIEW
+    field                    A                                     B
+  ~ format                   claude-code                           codex
+  ~ agent version            2.1.40                                0.98.0
+  ~ session id               5f1c2a9e-0b7d-4c3e-9a61-2d8e4f7b1c03  019a7f00-1111-7222-8333-944455556666
+  ~ model                    claude-opus-5-5                       gpt-5.3-codex
+  = git branch               fix/port-validation                   fix/port-validation
+  ~ working directory        /home/dev/widget                      C:\work\widget
+  ~ records (lines)          24 (24)                               20 (20)
+  = malformed records        0                                     0
+  ~ file changes             3                                     2
+  = files touched            2                                     2
+  ~ commands                 6                                     5
+  ~ commands failed          1                                     0
+  = commands without result  0                                     0
+  ~ test runs                4                                     2
+  = last test run            passed (go test)                      passed (go test)
+
+TIMING
+    field                        A                     B
+  ~ first record                 2026-11-02 10:00:00Z  2026-11-02 11:00:00Z
+  ~ last record                  2026-11-02 10:04:30Z  2026-11-02 11:01:52Z
+  ~ span (first to last record)  4m30s                 1m52s
+  ~ first file change            +1m10s                +40.4s
+  ~ last file change             +3m00s                +40.4s
+  ~ first command                +5.1s                 +7.5s
+  ~ first test run               +5.1s                 +7.5s
+  ~ first passing test run       +5.1s                 +7.5s
+  ~ recorded command time        not recorded          5.3s (5/5 commands)
+
+FILE CHANGES  (= same net effect, ~ differs, A/B only in one session; * line counts partial)
+    path                   A                           B
+  = config/config.go       modified +4/-1 (2 changes)  modified +3/-0
+  A config/config_test.go  created +15/-0              -
+  B config/validate.go     -                           created +10/-0
+
+COMMANDS  (never executed; matched by exact text after whitespace normalization)
+    command                                                           A                         B
+  = go test ./...                                                     2x: 2 ok                  ok [exit 0]
+  A cd /home/dev/widget && go test ./config/ -run TestParse -v        2x: 1 ok, 1 failed [e...  -
+  A export DEPLOY_TOKEN=fake-deploy-token-0000 && curl -H "Author...  rejected                  -
+  = git status --short                                                ok                        ok [exit 0]
+  B go test ./config/ -run "TestParse|TestValidate" -v                -                         ok [exit 0]
+  B go vet ./...                                                      -                         ok [exit 0]
+  B Remove-Item config\legacy_port.go                                 -                         ok [exit 0]
+
+TEST RUNS  (detected from command text; outcome = recorded command status)
+  A  4 run(s): 3 passed, 1 failed
+  cmd  outcome  runner   counts                       command
+  #1   passed   go test  2 passed, 0 failed packages  go test ./...
+  #2   failed   go test  1 passed, 1 failed           cd /home/dev/widget && go test ./config/ -run T...
+  #3   passed   go test  2 passed, 0 failed           cd /home/dev/widget && go test ./config/ -run T...
+  #4   passed   go test  2 passed, 0 failed packages  go test ./...
+  B  2 run(s): 2 passed, 0 failed
+  cmd  outcome  runner   counts                       command
+  #1   passed   go test  2 passed, 0 failed packages  go test ./...
+  #2   passed   go test  3 passed, 0 failed           go test ./config/ -run "TestParse|TestValidate" -v
+
+UNSUPPORTED OR PARTIAL FIELDS  (values the exports do not fully record)
+  field               A                            B
+  file_changes        partial (3 recorded)         partial (2 recorded)
+  commands            recorded (6 recorded)        partial (5 recorded)
+  commands.exit_code  partial (1/6 commands)       recorded (5/5 commands)
+  commands.duration   not recorded (0/6 commands)  recorded (5/5 commands)
+  commands.cwd        not recorded (0/6 commands)  recorded (5/5 commands)
+  tests               partial                      partial
+  session.timestamps  partial (22/24 records)      recorded (20/20 records)
+  token_usage         unsupported                  unsupported
+  assistant_messages  unsupported                  unsupported
+  Notes per field are in the HTML and JSON reports.

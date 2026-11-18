@@ -1,0 +1,13 @@
+﻿{"type": "user", "sessionId": "mal-1", "cwd": "/tmp/m", "timestamp": "2026-01-01T00:00:00Z", "message": {"role": "user", "content": "hi"}}
+{not json at all
+[1,2,3]
+"just a string"
+null
+{"type": "assistant", "sessionId": "mal-1", "timestamp": 12345, "message": "not an object"}
+{"type": "assistant", "sessionId": "mal-1", "timestamp": "not-a-time", "message": {"content": 42}}
+{"type": "assistant", "sessionId": "mal-1", "timestamp": "2026-01-01T00:00:05Z", "message": {"model": 7, "content": ["a bare string block", {"type": "tool_use", "id": 99, "name": "Bash", "input": {"command": "echo id-is-number"}}, {"type": "tool_use", "id": "t-noinput", "name": "Bash", "input": "string input"}, {"type": "tool_use", "id": "t-ok", "name": "Bash", "input": {"command": "echo ok"}}, {"type": "tool_use", "id": "t-noresult", "name": "Edit", "input": {"file_path": "/tmp/m/a.txt"}}, {"type": "tool_use", "id": "t-write", "name": "Write", "input": {"file_path": 5}}]}}
+{"type": "user", "sessionId": "mal-1", "timestamp": "2026-01-01T00:00:06Z", "toolUseResult": [1, 2], "message": {"content": [{"type": "tool_result", "tool_use_id": "t-ok", "content": [{"type": "text", "text": "ok"}, {"type": "image"}], "is_error": "no"}, {"type": "tool_result", "tool_use_id": "unknown-id", "content": "orphan"}]}}
+{"type":"user","sessionId":"mal-1","timestamp":"2026-01-01T00:00:07Z","message":{"content":[{"type":"tool_result","tool_use_id":"t-x"
+
+   
+{"type": "assistant", "sessionId": "mal-2", "timestamp": "2026-01-01T00:00:08Z", "message": {"content": [{"type": "tool_use", "id": "t-ok", "name": "Bash", "input": {"command": "echo duplicate id"}}]}}
