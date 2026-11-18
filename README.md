@@ -31,13 +31,39 @@ agent-session-diff claude-session.jsonl codex-rollout.jsonl --html report.html
 
 ## Install
 
-Requires Go 1.24 or newer.
+With Go 1.24 or newer:
 
 ```sh
 go install github.com/jahau/agent-session-diff/cmd/agent-session-diff@latest
+agent-session-diff version
 ```
 
-Or build from a checkout: `go build ./cmd/agent-session-diff`.
+Or download a prebuilt binary for Linux, macOS or Windows (amd64 and arm64)
+from the [Releases page](https://github.com/jahau/agent-session-diff/releases).
+Check the archive against `SHA256SUMS` before you run it:
+
+```sh
+sha256sum --check --ignore-missing SHA256SUMS
+```
+
+The release archives are reproducible. Building the tagged commit with Go
+1.27.4 and `scripts/build-release.sh <tag>` produces byte-identical files.
+
+To build from a checkout: `go build ./cmd/agent-session-diff`.
+
+## Try it on the bundled examples
+
+The repository includes two synthetic sessions of the same small task, one
+from Claude Code and one from Codex:
+
+```sh
+git clone https://github.com/jahau/agent-session-diff
+cd agent-session-diff
+go run ./cmd/agent-session-diff examples/claude-code-session.jsonl examples/codex-session.jsonl --html report.html
+```
+
+The output should match [examples/report.txt](examples/report.txt). CI checks
+that it does.
 
 ## Usage
 
@@ -126,9 +152,13 @@ output in [examples/report.txt](examples/report.txt).
   BOMs and CRLF line endings. Parsing continues.
 - Files with no recognizable format (empty, plain text, binary) are rejected
   with a clear error, not compared as empty sessions.
-- Logged text is escaped in HTML and stripped of control characters in the
-  terminal, so a logged ANSI sequence or `<script>` cannot affect your terminal
-  or browser.
+- Logged text is escaped in HTML, and control characters are shown as `\xNN`
+  in both the terminal and HTML output. A logged ANSI sequence or `<script>`
+  cannot affect your terminal or browser. A test feeds a hostile export
+  through the tool and checks that the report contains only the template's own
+  tags and no event-handler or URL attributes.
+- Input files are opened read-only and never modified, with or without
+  redaction.
 
 ## Development
 
@@ -143,8 +173,13 @@ session data. The fake credentials in them exist to test redaction.
 
 CI (`.github/workflows/ci.yml`) runs formatting, vet, a no-dependency check,
 tests on Linux, macOS and Windows with Go 1.24 and current stable, the race
-detector, `govulncheck`, a determinism check, and a check that
-`examples/report.*` matches the current build.
+detector, `govulncheck`, a determinism check, a check that
+`examples/report.*` matches the current build, and a double build that proves
+the release archives are reproducible.
+
+Releases: pushing a `v*` tag runs `.github/workflows/release.yml`. It tests,
+builds the archives and creates a **draft** GitHub release from
+`docs/release-notes/<tag>.md`. A maintainer then reviews and publishes it.
 
 ## License
 
