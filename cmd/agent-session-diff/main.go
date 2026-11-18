@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"runtime/debug"
 	"strings"
 
 	"github.com/jahau/agent-session-diff/internal/compare"
@@ -22,8 +23,21 @@ import (
 	"github.com/jahau/agent-session-diff/internal/render"
 )
 
-// version is set at build time with -ldflags "-X main.version=...".
+// version is set at build time with -ldflags "-X main.version=...". When it
+// is not set, the module version recorded by "go install ...@vX.Y.Z" is used.
 var version = "dev"
+
+func versionString() string {
+	if version != "dev" {
+		return version
+	}
+	if info, ok := debug.ReadBuildInfo(); ok {
+		if v := info.Main.Version; v != "" && v != "(devel)" {
+			return v
+		}
+	}
+	return version
+}
 
 const (
 	exitOK    = 0
@@ -119,7 +133,7 @@ func run(args []string, stdout, stderr io.Writer) int {
 	if len(args) > 0 {
 		switch args[0] {
 		case "version", "--version", "-version":
-			fmt.Fprintf(stdout, "agent-session-diff %s\n", version)
+			fmt.Fprintf(stdout, "agent-session-diff %s\n", versionString())
 			return exitOK
 		case "help", "--help", "-h", "-help":
 			fmt.Fprint(stdout, usageText)
@@ -176,8 +190,14 @@ func run(args []string, stdout, stderr io.Writer) int {
 		applied = append(applied, "paths")
 	}
 	cwds := []string{a.CWD, b.CWD}
+	sameCWD := a.CWD == b.CWD
 	redact.Session(a, ro, cwds)
 	redact.Session(b, ro, cwds)
+	// Both cwds redact to "<cwd>"; keep the overview honest about whether
+	// the original directories were the same.
+	if ro.Paths && !sameCWD && a.CWD != "" && b.CWD != "" {
+		a.CWD, b.CWD = "<cwd> (A)", "<cwd> (B)"
+	}
 
 	rep := compare.Compare(a, b, applied)
 
