@@ -13,7 +13,7 @@ OVERVIEW
   ~ session id               5f1c2a9e-0b7d-4c3e-9a61-2d8e4f7b1c03  019a7f00-1111-7222-8333-944455556666
   ~ model                    claude-opus-5-5                       gpt-5.3-codex
   = git branch               fix/port-validation                   fix/port-validation
-  = working directory        <cwd>                                 <cwd>
+  ~ working directory        <cwd> (A)                             <cwd> (B)
   ~ records (lines)          24 (24)                               20 (20)
   = malformed records        0                                     0
   ~ file changes             3                                     2
