@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="agent-session-diff (schema {{.SchemaVersion}})">
+<title>Session diff: {{.A.Label}} vs {{.B.Label}}</title>
+<style>
+:root {
+  --bg: #f7f7f5; --panel: #ffffff; --text: #1d1f23; --muted: #626872; --line: #e2e3e0;
+  --a: #1f6fb2; --b: #9a3d8f; --same: #2d7d46; --diff: #a86400; --bad: #b3261e;
+  --chip: #eef0ee; --code: #f1f2ef;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171a; --panel: #1d2024; --text: #e6e7e9; --muted: #9aa0a8; --line: #2e3238;
+    --a: #6cb2ec; --b: #d68ccc; --same: #6cc58a; --diff: #e3ad4f; --bad: #f08a80;
+    --chip: #2a2e33; --code: #23272c;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 1200px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 22px; margin: 0 0 4px; }
+h2 { font-size: 16px; margin: 32px 0 8px; }
+p.lede, .muted { color: var(--muted); }
+p.lede { margin: 0 0 16px; }
+code, .mono { font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace; font-size: 12.5px; }
+.sides { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.card h3 { margin: 0 0 4px; font-size: 14px; }
+.tag { display: inline-block; min-width: 20px; text-align: center; font-weight: 700; border-radius: 4px; padding: 0 5px; color: #fff; }
+.tag.a { background: var(--a); } .tag.b { background: var(--b); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 12px; }
+.stat b { display: block; font-size: 20px; }
+.scroll { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; vertical-align: top; padding: 6px 10px; border-bottom: 1px solid var(--line); }
+th { font-weight: 600; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .03em; background: var(--panel); }
+tr:last-child td { border-bottom: 0; }
+td.cmd { max-width: 560px; white-space: pre-wrap; word-break: break-word; }
+td.path { word-break: break-all; }
+.mark { font-weight: 700; width: 1%; white-space: nowrap; }
+.m-same { color: var(--same); } .m-diff { color: var(--diff); } .m-a { color: var(--a); } .m-b { color: var(--b); }
+.absent, .nr { color: var(--muted); }
+.bad { color: var(--bad); }
+.lvl { display: inline-block; border-radius: 10px; padding: 0 8px; background: var(--chip); font-size: 12px; white-space: nowrap; }
+.lvl-recorded { color: var(--same); } .lvl-partial { color: var(--diff); }
+.lvl-not-recorded, .lvl-unsupported { color: var(--bad); }
+.legend { font-size: 12px; color: var(--muted); margin: 4px 0 8px; }
+details { margin-top: 8px; } summary { cursor: pointer; color: var(--muted); }
+footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+<h1>Session diff</h1>
+<p class="lede">Comparison of two AI coding-agent session exports. Only actions recorded in the exports are shown; logged commands were not executed. Redaction: <b>{{redaction .Redaction}}</b>.</p>
+
+<div class="sides">
+  <div class="card"><h3><span class="tag a">A</span> {{.A.Label}}</h3>
+    <div class="muted">{{.A.Format}}{{with .A.AgentVersion}} {{.}}{{end}} · {{len .A.FileChanges}} file changes · {{len .A.Commands}} commands · {{len .A.Tests}} test runs</div></div>
+  <div class="card"><h3><span class="tag b">B</span> {{.B.Label}}</h3>
+    <div class="muted">{{.B.Format}}{{with .B.AgentVersion}} {{.}}{{end}} · {{len .B.FileChanges}} file changes · {{len .B.Commands}} commands · {{len .B.Tests}} test runs</div></div>
+</div>
+
+<div class="stats">
+  <div class="card stat"><b>{{.Summary.FilesBoth}}</b>files in both <span class="muted">({{.Summary.FilesDiffer}} differ)</span></div>
+  <div class="card stat"><b>{{.Summary.FilesOnlyA}} / {{.Summary.FilesOnlyB}}</b>files only in A / only in B</div>
+  <div class="card stat"><b>{{.Summary.CommandsBoth}}</b>commands in both</div>
+  <div class="card stat"><b>{{.Summary.CommandsOnlyA}} / {{.Summary.CommandsOnlyB}}</b>commands only in A / only in B</div>
+</div>
+
+<h2>Overview</h2>
+<div class="scroll"><table>
+<tr><th></th><th>Field</th><th>A</th><th>B</th></tr>
+{{range .Overview}}<tr><td class="mark {{if .Differs}}m-diff{{else}}m-same{{end}}">{{if .Differs}}~{{else}}={{end}}</td><td>{{.Field}}</td><td class="{{nrclass .A}}">{{.A}}</td><td class="{{nrclass .B}}">{{.B}}</td></tr>
+{{end}}</table></div>
+
+<h2>Timing</h2>
+<p class="legend">Offsets are measured from each session's first timestamped record. Span includes idle time.</p>
+<div class="scroll"><table>
+<tr><th>Field</th><th>A</th><th>B</th></tr>
+{{range .Timing}}<tr><td>{{.Field}}</td><td class="{{nrclass .A}}">{{.A}}</td><td class="{{nrclass .B}}">{{.B}}</td></tr>
+{{end}}</table></div>
+
+<h2>File changes</h2>
+<p class="legend"><span class="m-same">=</span> same net effect · <span class="m-diff">~</span> different net effect · <span class="m-a">A</span>/<span class="m-b">B</span> only in one session · <code>*</code> line counts are partial. Only edits made through the agents' file-edit tools are recorded; shell commands that change files are not detected.</p>
+{{if .Files}}<div class="scroll"><table>
+<tr><th></th><th>Path</th><th>A</th><th>B</th></tr>
+{{range .Files}}<tr><td class="mark {{markclass .Presence .SameNet}}">{{mark .Presence .SameNet}}</td><td class="path mono">{{.Path}}</td><td class="{{absentclass .A}}">{{filecell .A}}</td><td class="{{absentclass .B}}">{{filecell .B}}</td></tr>
+{{end}}</table></div>{{else}}<p class="muted">No file changes recorded in either session.</p>{{end}}
+
+<h2>Commands</h2>
+<p class="legend">Matched by exact command text (whitespace normalized). Commands are shown as logged and were never executed.</p>
+{{if .Commands}}<div class="scroll"><table>
+<tr><th></th><th>Command</th><th>Test</th><th>A</th><th>B</th></tr>
+{{range .Commands}}<tr><td class="mark {{markclass .Presence true}}">{{mark .Presence true}}</td><td class="cmd mono">{{.Text}}</td><td class="muted">{{.TestRunner}}</td><td class="{{cmdclass .A}}">{{cmdcell .A}}</td><td class="{{cmdclass .B}}">{{cmdcell .B}}</td></tr>
+{{end}}</table></div>{{else}}<p class="muted">No commands recorded in either session.</p>{{end}}
+
+<h2>Test runs</h2>
+<p class="legend">A test run is a command whose text starts a known test runner. Outcome is the recorded command status; counts appear only when the recorded output contains a runner summary line.</p>
+{{range $i, $t := .Tests}}<div class="card" style="margin-bottom:12px">
+<h3><span class="tag {{if eq $i 0}}a{{else}}b{{end}}">{{if eq $i 0}}A{{else}}B{{end}}</span> {{testside $t}}</h3>
+{{if $t.Entries}}<div class="scroll" style="border:0"><table>
+<tr><th>Cmd</th><th>Time</th><th>Outcome</th><th>Runner</th><th>Counts</th><th>Command</th></tr>
+{{range $t.Entries}}<tr><td class="mono">#{{.CommandSeq}}</td><td class="mono {{nrclass (time .Timestamp)}}">{{time .Timestamp}}</td><td class="{{if eq (print .Outcome) "failed"}}bad{{end}}">{{.Outcome}}</td><td>{{.Runner}}</td><td class="{{if not .CountsSource}}nr{{end}}">{{testcounts .}}</td><td class="cmd mono">{{.Command}}</td></tr>
+{{end}}</table></div>{{end}}
+</div>{{end}}
+
+<h2>Field support</h2>
+<p class="legend">How completely each compared field is backed by the export. Anything not <i>recorded</i> is shown as missing or partial; nothing is filled in by inference.</p>
+<div class="scroll"><table>
+<tr><th>Field</th><th>A</th><th>B</th><th>Notes</th></tr>
+{{range .Support}}<tr><td class="mono">{{.Field}}</td><td><span class="lvl {{lvlclass .A.Level}}">{{supportcell .A}}</span></td><td><span class="lvl {{lvlclass .B.Level}}">{{supportcell .B}}</span></td><td class="muted">{{notes .A .B}}</td></tr>
+{{end}}</table></div>
+
+<h2>Not compared</h2>
+<div class="sides">
+{{range $i, $s := sessions .A .B}}<div class="card"><h3><span class="tag {{if eq $i 0}}a{{else}}b{{end}}">{{if eq $i 0}}A{{else}}B{{end}}</span> {{$s.Label}}</h3>
+<div class="muted">Other tool calls (reads, searches, web, MCP):</div>
+{{if $s.OtherTools}}<div class="mono">{{range $j, $n := $s.OtherTools}}{{if $j}}, {{end}}{{$n.Name}}&nbsp;×{{$n.Count}}{{end}}</div>{{else}}<div class="nr">none</div>{{end}}
+<details><summary>Record types present but not interpreted ({{len $s.NotInterpreted}})</summary>
+<div class="mono">{{range $j, $n := $s.NotInterpreted}}{{if $j}}, {{end}}{{$n.Name}}&nbsp;×{{$n.Count}}{{end}}</div></details>
+{{if $s.WarningsTotal}}<details open><summary class="bad">Parse warnings ({{$s.WarningsTotal}})</summary>
+<ul class="mono">{{range $s.Warnings}}<li>line {{.Line}}: {{.Message}}</li>{{end}}{{if gt $s.WarningsTotal (len $s.Warnings)}}<li>… {{minus $s.WarningsTotal (len $s.Warnings)}} more</li>{{end}}</ul></details>{{end}}
+</div>
+{{end}}</div>
+
+<footer>Generated by agent-session-diff (report schema {{.SchemaVersion}}). The report is a deterministic function of the two input files and the chosen options; it contains no generation timestamp.</footer>
+</main>
+</body>
+</html>

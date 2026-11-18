@@ -1,0 +1,84 @@
+agent-session-diff: comparing two session exports
+  A  legacy.jsonl  (codex 0.58.0)
+  B  codex-session.jsonl  (codex 0.98.0)
+  redaction: off
+  files: 0 in both (0 differ), 3 only in A, 2 only in B
+  commands: 0 in both, 4 only in A, 5 only in B
+  tests: A 3 run(s): 1 passed, 2 failed | B 2 run(s): 2 passed, 0 failed
+
+OVERVIEW
+    field                    A                                     B
+  = format                   codex                                 codex
+  ~ agent version            0.58.0                                0.98.0
+  ~ session id               019a7e24-40ec-7660-93f3-a5387a4887b0  019a7f00-1111-7222-8333-944455556666
+  ~ model                    gpt-5-codex                           gpt-5.3-codex
+  ~ git branch               not recorded                          fix/port-validation
+  ~ working directory        /srv/app                              C:\work\widget
+  ~ records (lines)          16 (16)                               20 (20)
+  = malformed records        0                                     0
+  ~ file changes             3                                     2
+  ~ files touched            3                                     2
+  ~ commands                 4                                     5
+  ~ commands failed          2                                     0
+  ~ commands without result  1                                     0
+  ~ test runs                3                                     2
+  ~ last test run            failed (cargo test)                   passed (go test)
+
+TIMING
+    field                        A                     B
+  ~ first record                 2025-11-13 09:00:00Z  2026-11-02 11:00:00Z
+  ~ last record                  2025-11-13 09:01:00Z  2026-11-02 11:01:52Z
+  ~ span (first to last record)  1m00s                 1m52s
+  ~ first file change            +10.0s                +40.4s
+  ~ last file change             +12.0s                +40.4s
+  ~ first command                +5.0s                 +7.5s
+  ~ first test run               +5.0s                 +7.5s
+  ~ first passing test run       +20.0s                +7.5s
+  ~ recorded command time        13.8s (3/4 commands)  5.3s (5/5 commands)
+
+FILE CHANGES  (= same net effect, ~ differs, A/B only in one session; * line counts partial)
+    path                A                                   B
+  A api/limits.py       renamed -> api/rate_limits.py +...  -
+  A api/old.py          deleted (line counts not recorded)  -
+  A api/views.py        not applied (1 not applied)         -
+  B config/config.go    -                                   modified +3/-0
+  B config/validate.go  -                                   created +10/-0
+
+COMMANDS  (never executed; matched by exact text after whitespace normalization)
+    command                                             A                  B
+  A pytest -q                                           failed [exit 1]    -
+  A npm test                                            ok [exit 0]        -
+  A cargo test                                          failed [exit 101]  -
+  A make deploy                                         unknown            -
+  B go test ./...                                       -                  ok [exit 0]
+  B go test ./config/ -run "TestParse|TestValidate" -v  -                  ok [exit 0]
+  B go vet ./...                                        -                  ok [exit 0]
+  B Remove-Item config\legacy_port.go                   -                  ok [exit 0]
+  B git status --short                                  -                  ok [exit 0]
+
+TEST RUNS  (detected from command text; outcome = recorded command status)
+  A  3 run(s): 1 passed, 2 failed
+  cmd  outcome  runner      counts              command
+  #1   failed   pytest      3 passed, 1 failed  pytest -q
+  #2   passed   npm test    4 passed, 0 failed  npm test
+  #3   failed   cargo test  7 passed, 1 failed  cargo test
+  B  2 run(s): 2 passed, 0 failed
+  cmd  outcome  runner   counts                       command
+  #1   passed   go test  2 passed, 0 failed packages  go test ./...
+  #2   passed   go test  3 passed, 0 failed           go test ./config/ -run "TestParse|TestValidate" -v
+
+UNSUPPORTED OR PARTIAL FIELDS  (values the exports do not fully record)
+  field                     A                       B
+  file_changes              partial (3 recorded)    partial (2 recorded)
+  file_changes.line_counts  partial (2/3 changes)   recorded (2/2 changes)
+  commands                  recorded (4 recorded)   partial (5 recorded)
+  commands.status           partial (3/4 commands)  recorded (5/5 commands)
+  commands.exit_code        partial (3/4 commands)  recorded (5/5 commands)
+  commands.duration         partial (3/4 commands)  recorded (5/5 commands)
+  commands.cwd              partial (3/4 commands)  recorded (5/5 commands)
+  tests                     partial                 partial
+  session.git_branch        not recorded            recorded
+  token_usage               unsupported             unsupported
+  assistant_messages        unsupported             unsupported
+  Notes per field are in the HTML and JSON reports.
+
